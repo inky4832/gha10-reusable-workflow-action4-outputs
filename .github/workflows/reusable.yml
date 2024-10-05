@@ -1,0 +1,22 @@
+name: Resualbe Deploy
+on: 
+    workflow_call:
+          outputs:
+              result:
+                  description: "The first output string"
+                  value: ${{ jobs.reusable_workflow_job.outputs.outcome99 }}
+jobs:
+  reusable_workflow_job:
+
+      outputs:
+        outcome99: ${{steps.set-result.outputs.mesg}}
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy
+          run: |
+            ls ${{ github.workspace }}
+            echo "Deploying..."
+
+        - name: Set Result output
+          id: set-result
+          run: echo "mesg=success" >> $GITHUB_OUTPUT

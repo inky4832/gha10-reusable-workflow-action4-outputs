@@ -1,0 +1,35 @@
+name: Reusable action workflow  
+
+on: push  
+
+jobs:  
+  
+  test:
+    runs-on: ubuntu-latest  
+    steps:  
+      - name: Run Test  
+        run: |  
+          ls ${{ github.workspace }}  
+          echo Run Test  
+  
+  build: 
+    needs: test  
+    runs-on: ubuntu-latest  
+
+    steps:  
+      
+      - name: Run Build  
+        run: |  
+          ls ${{ github.workspace }} 
+          echo Run Build  
+
+  use-reuse-deploy:  
+    needs: build  
+    uses:  ./.github/workflows/reusable.yml
+
+  print-deploy-result:			      <----------------deploy에서  use-reuse.yml에 반환될 값을 설정-3
+    needs: use-reuse-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print deploy output
+        run:  echo "${{ needs.use-reuse-deploy.outputs.result}}"   
