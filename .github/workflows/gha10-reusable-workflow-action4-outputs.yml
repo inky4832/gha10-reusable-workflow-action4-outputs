@@ -27,7 +27,7 @@ jobs:
     needs: build  
     uses:  ./.github/workflows/reusable.yml
 
-  print-deploy-result:			      <----------------deploy에서  use-reuse.yml에 반환될 값을 설정-3
+  print-deploy-result:			      
     needs: use-reuse-deploy
     runs-on: ubuntu-latest
     steps:
